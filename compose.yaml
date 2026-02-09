@@ -35,6 +35,31 @@ services:
   #     retries: 3
   #   restart: unless-stopped
 
+  tautulli:
+    container_name: tautulli
+    image: lscr.io/linuxserver/tautulli:latest
+    ports:
+      - 8181:8181
+    networks:
+      mediaapps_default:
+        ipv4_address: 172.40.0.3
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TZ}
+    volumes:
+      - /opt/docker/mediaapps/config/tautulli:/config
+    restart: unless-stopped
+    labels:
+      - homepage.group=Apps
+      - homepage.name=Tautulli
+      - homepage.icon=tautulli
+      - homepage.href={{HOMEPAGE_VAR_DOCKER-MEDIA_IP}}:8181
+      - homepage.weight=2
+      - homepage.widget.type=tautulli
+      - homepage.widget.url={{HOMEPAGE_VAR_DOCKER-MEDIA_IP}}:8181
+      - homepage.widget.key={{HOMEPAGE_VAR_TAUTULLI_API_KEY}}
+
   jellyseerr:
     container_name: jellyseerr
     image: ghcr.io/fallenbagel/jellyseerr:latest
@@ -43,11 +68,10 @@ services:
       - 5055:5055
     networks:
       mediaapps_default:
-        ipv4_address: 172.40.0.3
+        ipv4_address: 172.40.0.4
     environment:
       - PUID=${PUID}
       - PGID=${PGID}
-      - UMASK=002
       - TZ=${TZ}
     volumes:
       - /opt/docker/mediaapps/config/jellyseerr:/app/config
@@ -67,4 +91,3 @@ services:
       - homepage.widget.type=jellyseerr
       - homepage.widget.url={{HOMEPAGE_VAR_DOCKER-MEDIA_IP}}:5055
       - homepage.widget.key={{HOMEPAGE_VAR_JELLYSEERR_API_KEY}}
-
