@@ -53,7 +53,7 @@ services:
 
   jellyseerr:
     container_name: jellyseerr
-    image: ghcr.io/fallenbagel/jellyseerr:latest
+    image: ghcr.io/seerr-team/seerr:latest
     init: true
     ports:
       - 5055:5055
